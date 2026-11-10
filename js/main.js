@@ -43,3 +43,11 @@
   document.addEventListener('click', function (e) { if (!fab.contains(e.target)) set(false); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { set(false); } });
 })();
+
+// Meta Pixel: cada clic hacia WhatsApp se registra como "Contact", con la sección del sitio
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[href*="wa.me/"]');
+  if (!a || typeof window.fbq !== 'function') return;
+  var seccion = location.pathname.split('/')[1] || 'inicio';
+  window.fbq('track', 'Contact', { content_category: seccion });
+});
